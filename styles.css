@@ -63,11 +63,6 @@ h6 {
   overflow-wrap: break-word;
 }
 
-/* utilities */
-.hidden {
-  display: none;
-}
-
 /* base styling */
 
 html {
@@ -137,10 +132,6 @@ h3 {
 }
 
 #quiz-container {
-  background-color: var(--background-color-primary);
-  width: 80%;
-  border-radius: 1rem;
-  padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -148,13 +139,15 @@ h3 {
   gap: 2.5rem;
 }
 
-#question-container {
+.question-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
-  width: 100%;
+  background-color: var(--background-color-primary);
+  border-radius: 1rem;
+  padding: 3rem 7rem;
 }
 
 #question {
@@ -182,12 +175,17 @@ h3 {
 }
 
 .answers span {
-  padding: 0.8rem 1.6rem;
+  padding: 1rem 1.6rem;
   margin-right: 1rem;
   background-color: var(--color-secondary);
   color: var(--background-color-primary);
 }
 
 input[type='radio'] {
+  display: none;
+}
+
+/* utilities */
+.hidden {
   display: none;
 }

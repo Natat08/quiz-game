@@ -10,31 +10,25 @@
     <div class="container">
       <section id="home" class="home">
         <h1>Quiz Game</h1>
-        <a class="btn" href="#game">Play</a>
+        <a id="play-btn" class="btn" href="#game">Play</a>
         <a class="btn" href="/highscores.html">High Scores</a>
       </section>
-      <section id="game" class="game">
+
+      <section id="game" class="game hidden">
+        <!-- hidden -->
         <h2>Let's play!</h2>
         <div id="quiz-container">
-          <div id="question-container">
-            <h3 id="question">Which planet is known as the Red Planet?</h3>
-            <div class="answers">
-              <label
-                ><input type="radio" name="answer" value="0" id="option0" />
-                <span>A</span>Earth</label
-              >
-              <label
-                ><input type="radio" name="answer" value="1" id="option1" />
-                <span>B</span>Jupiter</label
-              >
-              <label
-                ><input type="radio" name="answer" value="2" id="option2" />
-                <span>C</span>Mars</label
-              >
-              <label
-                ><input type="radio" name="answer" value="3" id="option3" />
-                <span>D</span>Venus</label
-              >
+          <div id="question-container" class="question-container">
+            <h3 id="question">Question</h3>
+            <div class="answers" for="answer0">
+              <label id="answer0"><span>A</span></label
+              ><input type="radio" name="answer" value="0" id="answer0" />
+              <label id="answer1" for="answer1"> <span>B</span></label
+              ><input type="radio" name="answer" value="1" id="answer1" />
+              <label id="answer2" for="answer2"> <span>C</span></label
+              ><input type="radio" name="answer" value="2" id="answer2" />
+              <label id="answer3" for="answer3"> <span>D</span></label
+              ><input type="radio" name="answer" value="3" id="answer3" />
             </div>
           </div>
           <button id="next-button" class="btn">Next</button>
