@@ -1,0 +1,193 @@
+:root {
+  --font-primary: Geneva, Verdana, sans-serif;
+  --background-color-primary: #fff;
+  --background-color-gradient: linear-gradient(to right, #eecda3, #ef629f);
+  --color-secondary: #a40f4f;
+}
+
+/* CSS reset */
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/*
+  2. Remove default margin and padding
+*/
+* {
+  margin: 0;
+  padding: 0;
+}
+/*
+  Typographic tweaks!
+  3. Add accessible line-height
+  4. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+/*
+  5. Improve media defaults
+*/
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+/*
+  6. Remove built-in form typography styles
+*/
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+/*
+  7. Avoid text overflows
+*/
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* utilities */
+.hidden {
+  display: none;
+}
+
+/* base styling */
+
+html {
+  font-size: 62.5%; /* 10px */
+}
+
+body {
+  font-family: var(--font-primary);
+  color: var(--color-secondary);
+  background-color: var(--background-color-primary);
+  background: var(--background-color-gradient);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 80rem;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.home,
+.game {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: 4.5rem;
+  margin-bottom: 3rem;
+}
+
+h2 {
+  font-size: 3.5rem;
+  margin-bottom: 3rem;
+}
+
+h3 {
+  font-size: 2.5rem;
+}
+
+.btn {
+  display: block;
+  font-size: 1.5rem;
+  padding: 1rem 0;
+  width: 20rem;
+  text-align: center;
+  border: 0.2rem solid var(--color-secondary);
+  margin-bottom: 1.5rem;
+  text-decoration: none;
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  background-color: inherit;
+}
+
+.btn:hover {
+  cursor: pointer;
+  box-shadow: 0 0.4rem 1.4rem 0 rgba(163, 7, 85, 0.5);
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}
+
+#quiz-container {
+  background-color: var(--background-color-primary);
+  width: 80%;
+  border-radius: 1rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+#question-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+#question {
+  text-align: center;
+}
+
+.answers {
+  width: 40rem;
+}
+
+.answers label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  font-size: 1.3rem;
+  border: 0.1rem solid var(--color-secondary);
+}
+
+.answers label:hover {
+  cursor: pointer;
+  box-shadow: 0 0.4rem 1.4rem 0 rgba(163, 7, 85, 0.5);
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}
+
+.answers span {
+  padding: 0.8rem 1.6rem;
+  margin-right: 1rem;
+  background-color: var(--color-secondary);
+  color: var(--background-color-primary);
+}
+
+input[type='radio'] {
+  display: none;
+}

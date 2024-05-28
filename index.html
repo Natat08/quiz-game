@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Quiz Game</title>
+  </head>
+  <body>
+    <div class="container">
+      <section id="home" class="home">
+        <h1>Quiz Game</h1>
+        <a class="btn" href="#game">Play</a>
+        <a class="btn" href="/highscores.html">High Scores</a>
+      </section>
+      <section id="game" class="game">
+        <h2>Let's play!</h2>
+        <div id="quiz-container">
+          <div id="question-container">
+            <h3 id="question">Which planet is known as the Red Planet?</h3>
+            <div class="answers">
+              <label
+                ><input type="radio" name="answer" value="0" id="option0" />
+                <span>A</span>Earth</label
+              >
+              <label
+                ><input type="radio" name="answer" value="1" id="option1" />
+                <span>B</span>Jupiter</label
+              >
+              <label
+                ><input type="radio" name="answer" value="2" id="option2" />
+                <span>C</span>Mars</label
+              >
+              <label
+                ><input type="radio" name="answer" value="3" id="option3" />
+                <span>D</span>Venus</label
+              >
+            </div>
+          </div>
+          <button id="next-button" class="btn">Next</button>
+        </div>
+      </section>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
