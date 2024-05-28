@@ -3,6 +3,8 @@
   --background-color-primary: #fff;
   --background-color-gradient: linear-gradient(to right, #eecda3, #ef629f);
   --color-secondary: #a40f4f;
+  --color-correct: #8dfc8d9d;
+  --color-wrong: #f5a8a89f;
 }
 
 /* CSS reset */
@@ -193,4 +195,11 @@ input[type='radio'] {
 }
 .message {
   font-size: 1.5rem;
+}
+.correct {
+  background-color: var(--color-correct);
+}
+
+.wrong {
+  background-color: var(--color-wrong);
 }

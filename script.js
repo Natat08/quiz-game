@@ -42,7 +42,6 @@ playBtn.addEventListener('click', startGame);
 nextBtn.addEventListener('click', handleNextButtonClick);
 
 function startGame() {
-  console.log(document.getElementsByTagName('label'));
   questionCounter = 0;
   score = 0;
   availableQuestions = [...questions]; //copy questions
@@ -90,6 +89,7 @@ function handleNextButtonClick() {
     questionCounter++;
     if (availableQuestions.length > 0) {
       renderNewQuestion();
+      removeColor();
     } else {
       document.getElementById(
         'quiz-container'
@@ -104,4 +104,24 @@ function handleNextButtonClick() {
       messageSelectOption.remove();
     }, 2000);
   }
+}
+
+answers.forEach((answer) => {
+  answer.addEventListener('click', handleRadioButtonClick);
+});
+
+function handleRadioButtonClick(event) {
+  removeColor();
+  const selectedChoice = event.target.value;
+  if (currentQuestion.answers[selectedChoice].isCorrect) {
+    document.getElementById(`label${selectedChoice}`).classList.add('correct');
+  } else {
+    document.getElementById(`label${selectedChoice}`).classList.add('wrong');
+  }
+}
+
+function removeColor() {
+  Array.from(document.getElementsByTagName('label')).forEach((label) => {
+    label.classList.remove('wrong', 'correct');
+  });
 }
