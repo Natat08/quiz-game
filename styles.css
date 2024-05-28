@@ -145,6 +145,8 @@ h3 {
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
+  min-width: 70rem;
+  min-height: 40rem;
   background-color: var(--background-color-primary);
   border-radius: 1rem;
   padding: 3rem 7rem;
@@ -188,4 +190,7 @@ input[type='radio'] {
 /* utilities */
 .hidden {
   display: none;
+}
+.message {
+  font-size: 1.5rem;
 }

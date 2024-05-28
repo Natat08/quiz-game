@@ -1,5 +1,7 @@
-let currentQuestionIndex = 0;
+let currentQuestion = {};
 let score = 0;
+let questionCounter = 0;
+let availableQuestions = [];
 
 const questions = [
   {
@@ -32,21 +34,74 @@ const questions = [
 ];
 
 const playBtn = document.getElementById('play-btn');
+const nextBtn = document.getElementById('next-button');
 const question = document.getElementById('question');
 const answers = Array.from(document.getElementsByName('answer'));
 
 playBtn.addEventListener('click', startGame);
+nextBtn.addEventListener('click', handleNextButtonClick);
 
 function startGame() {
+  console.log(document.getElementsByTagName('label'));
+  questionCounter = 0;
+  score = 0;
+  availableQuestions = [...questions]; //copy questions
   document.getElementById('game').classList.remove('hidden');
-  renderQuestion();
+
+  renderNewQuestion();
 }
 
-function renderQuestion() {
-  const currentQuestion = questions[currentQuestionIndex];
+function renderNewQuestion() {
+  questionCounter++;
+  const questionIndex = Math.floor(Math.random() * availableQuestions.length);
+  currentQuestion = availableQuestions[questionIndex];
   question.innerText = currentQuestion.question;
   currentQuestion.answers.forEach((answer, index) => {
-    document.getElementById(`answer${index}`).innerHTML += answer.text;
+    const labelElement = document.getElementById(`label${index}`);
+    //to save span inside label
+    while (
+      labelElement.lastChild &&
+      labelElement.lastChild.nodeType === Node.TEXT_NODE
+    ) {
+      labelElement.removeChild(labelElement.lastChild);
+    }
+    const newAnswer = document.createTextNode(answer.text);
+    labelElement.appendChild(newAnswer);
     document.getElementById(`answer${index}`).checked = false;
   });
+  availableQuestions.splice(questionIndex, 1);
+}
+
+function getSelectedOption() {
+  for (const answer of answers) {
+    if (answer.checked) {
+      return parseInt(answer.value);
+    }
+  }
+  return -1; // No option selected
+}
+
+function handleNextButtonClick() {
+  const selectedOption = getSelectedOption();
+  if (selectedOption !== -1) {
+    if (currentQuestion.answers[selectedOption].isCorrect) {
+      score++;
+    }
+    questionCounter++;
+    if (availableQuestions.length > 0) {
+      renderNewQuestion();
+    } else {
+      document.getElementById(
+        'quiz-container'
+      ).innerHTML = `<h2>You scored ${score} out of ${questions.length}!</h2>`;
+    }
+  } else {
+    const messageSelectOption = document.createElement('p');
+    messageSelectOption.innerHTML = 'Please select an option!';
+    messageSelectOption.classList.add('message');
+    document.getElementById('quiz-container').appendChild(messageSelectOption);
+    setTimeout(() => {
+      messageSelectOption.remove();
+    }, 2000);
+  }
 }
