@@ -14,7 +14,7 @@ const questions = [
     ],
   },
   {
-    question: 'Which planet is known as the Red Planet?',
+    question: 'Which planet is known as the Red Planetaaaaaaaaaaaaaaaa?',
     answers: [
       { text: 'Earth', isCorrect: false },
       { text: 'Mars', isCorrect: true },
@@ -23,7 +23,7 @@ const questions = [
     ],
   },
   {
-    question: 'Who wrote "Romeo and Juliet"?',
+    question: 'Who wrote "Romeo and Julietaaaaaaaaaaaaaa"?',
     answers: [
       { text: 'Charles Dickens', isCorrect: false },
       { text: 'Mark Twain', isCorrect: false },
@@ -34,9 +34,8 @@ const questions = [
 ];
 
 const playBtn = document.getElementById('play-btn');
-const nextBtn = document.getElementById('next-button');
 const question = document.getElementById('question');
-const answers = Array.from(document.getElementsByName('answer'));
+const answers = Array.from(document.getElementsByClassName('answer-text'));
 
 playBtn.addEventListener('click', startGame);
 nextBtn.addEventListener('click', handleNextButtonClick);
@@ -58,12 +57,12 @@ function renderNewQuestion() {
   currentQuestion.answers.forEach((answer, index) => {
     const labelElement = document.getElementById(`label${index}`);
     //to save span inside label
-    while (
-      labelElement.lastChild &&
-      labelElement.lastChild.nodeType === Node.TEXT_NODE
-    ) {
-      labelElement.removeChild(labelElement.lastChild);
-    }
+    // while (
+    //   labelElement.lastChild &&
+    //   labelElement.lastChild.nodeType === Node.TEXT_NODE
+    // ) {
+    //   labelElement.removeChild(labelElement.lastChild);
+    // }
     const newAnswer = document.createTextNode(answer.text);
     labelElement.appendChild(newAnswer);
     document.getElementById(`answer${index}`).checked = false;
@@ -89,11 +88,11 @@ function handleNextButtonClick() {
     questionCounter++;
     if (availableQuestions.length > 0) {
       renderNewQuestion();
-      removeColor();
+      resetAnswers();
     } else {
       document.getElementById(
         'quiz-container'
-      ).innerHTML = `<h2>You scored ${score} out of ${questions.length}!</h2>`;
+      ).innerHTML = `<h3>You scored ${score} out of ${questions.length}!</h3>`;
     }
   } else {
     const messageSelectOption = document.createElement('p');
@@ -111,17 +110,34 @@ answers.forEach((answer) => {
 });
 
 function handleRadioButtonClick(event) {
-  removeColor();
+  resetAnswers();
   const selectedChoice = event.target.value;
+  //making all radio buttons disabled
+  answers.forEach((answer) => {
+    answer.disabled = true;
+  });
+  //changing color of label according to correctness
   if (currentQuestion.answers[selectedChoice].isCorrect) {
     document.getElementById(`label${selectedChoice}`).classList.add('correct');
   } else {
     document.getElementById(`label${selectedChoice}`).classList.add('wrong');
   }
+  //making rest of labels disabled
+  Array.from(document.getElementsByTagName('label'))
+    .filter((_, index) => {
+      return index !== parseInt(selectedChoice);
+    })
+    .forEach((label) => {
+      label.classList.add('disabled');
+    });
 }
 
-function removeColor() {
+function resetAnswers() {
   Array.from(document.getElementsByTagName('label')).forEach((label) => {
     label.classList.remove('wrong', 'correct');
+  });
+  answers.forEach((answer, index) => {
+    answer.disabled = false;
+    document.getElementById(`label${index}`).classList.remove('disabled');
   });
 }
