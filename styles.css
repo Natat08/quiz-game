@@ -5,6 +5,7 @@
   --color-secondary: #a40f4f;
   --color-correct: #a2e8a29d;
   --color-wrong: #f22d2d56;
+  --color-shadow: #5e0a2e89;
 }
 
 /* CSS reset */
@@ -154,56 +155,24 @@ h3 {
   border: 0.1rem solid var(--color-secondary);
 }
 
+.answer-container:hover {
+  cursor: pointer;
+  box-shadow: 0 0.4rem 1.4rem 0 var(--color-shadow);
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}
+
 .answer-prefix {
   padding: 1rem 1.6rem;
   margin-right: 0.8rem;
   background-color: var(--color-secondary);
   color: var(--background-color-primary);
 }
-/* #question {
-  text-align: center;
-}
-
-.answers {
-  width: 40rem;
-} */
-
-.answers label {
-  /* display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  width: 100%;
-  font-size: 1.3rem;
-  border: 0.1rem solid var(--color-secondary); */
-}
-
-/* .answers label:hover {
-  cursor: pointer;
-  box-shadow: 0 0.4rem 1.4rem 0 rgba(163, 7, 85, 0.5);
-  transform: translateY(-0.1rem);
-  transition: transform 150ms;
-} */
 
 .disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
-/* 
-.answer-container {
-  display: flex;
-  margin-bottom: 0.5rem;
-  width: 100%;
-  font-size: 1.8rem;
-  border: 0.1rem solid rgb(86, 165, 235, 0.25);
-  background-color: white;
-}
-
-.answers span {
-  padding: 1rem 1.6rem;
-  margin-right: 1rem;
-  background-color: var(--color-secondary);
-  color: var(--background-color-primary);
-} */
 
 input[type='radio'] {
   display: none;
