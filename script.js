@@ -15,7 +15,7 @@ const questions = [
     ],
   },
   {
-    question: 'Which planet is known as the Red Planetaaaaaaaaaaaaaaaa?',
+    question: 'Which planet is known as the Red Planeta?',
     answers: [
       { text: 'Earth', isCorrect: false },
       { text: 'Mars', isCorrect: true },
@@ -24,7 +24,7 @@ const questions = [
     ],
   },
   {
-    question: 'Who wrote "Romeo and Julietaaaaaaaaaaaaaa"?',
+    question: 'Who wrote "Romeo and Julieta"?',
     answers: [
       { text: 'Charles Dickens', isCorrect: false },
       { text: 'Mark Twain', isCorrect: false },
@@ -37,6 +37,8 @@ const questions = [
 const playBtn = document.getElementById('play-btn');
 const question = document.getElementById('question');
 const answers = Array.from(document.querySelectorAll('.answer-text'));
+const usernameInput = document.getElementById('username');
+const saveScoreBtn = document.getElementById('save-score');
 
 playBtn.addEventListener('click', startGame);
 
@@ -50,10 +52,12 @@ function startGame() {
 
 function displayNewQuestion() {
   if (availableQuestions.length === 0 || questionCounter >= maxQuestions) {
-    document.getElementById(
-      'game'
-    ).innerHTML = `<h3>You scored ${score} out of ${questions.length}!</h3>`;
-    return;
+    localStorage.setItem('mostRecentScore', score); //save in LocalStorage
+    //go to the score page
+    document.getElementById('result').classList.remove('hidden');
+    document.querySelector('.final-score').innerText =
+      localStorage.getItem('mostRecentScore');
+    return window.location.assign('#result');
   }
   questionCounter++;
   document.getElementById(
@@ -103,4 +107,14 @@ function handleAnswerClick(event) {
     });
     displayNewQuestion();
   }, 1500);
+}
+
+usernameInput.addEventListener('keyup', () => {
+  saveScoreBtn.disabled = !usernameInput.value;
+});
+
+saveScoreBtn.addEventListener('click', handleSaveScore);
+
+function handleSaveScore(event) {
+  event.preventDefault();
 }

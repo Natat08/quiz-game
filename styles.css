@@ -1,7 +1,9 @@
 :root {
   --font-primary: Geneva, Verdana, sans-serif;
   --background-color-primary: #fff;
+  --background-color-secondary: rgb(203, 85, 136);
   --background-color-gradient: linear-gradient(to right, #eecda3, #ef629f);
+  --color-primary: #444;
   --color-secondary: #a40f4f;
   --color-correct: #a2e8a29d;
   --color-wrong: #f22d2d56;
@@ -74,7 +76,7 @@ html {
 
 body {
   font-family: var(--font-primary);
-  color: var(--color-secondary);
+  color: var(--color-primary);
   background-color: var(--background-color-primary);
   background: var(--background-color-gradient);
 }
@@ -90,7 +92,8 @@ body {
 }
 
 .home,
-.game {
+.game,
+.result {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -102,11 +105,13 @@ body {
 h1 {
   font-size: 4.5rem;
   margin-bottom: 3rem;
+  color: var(--color-secondary);
 }
 
 h2 {
   font-size: 3.5rem;
   margin-bottom: 3rem;
+  color: var(--color-secondary);
 }
 
 h3 {
@@ -123,6 +128,7 @@ h3 {
   border: 0.2rem solid var(--color-secondary);
   margin-bottom: 1.5rem;
   text-decoration: none;
+  background-color: inherit;
   color: var(--color-secondary);
   text-transform: uppercase;
 }
@@ -132,6 +138,12 @@ h3 {
   box-shadow: 0 0.4rem 1.4rem 0 rgba(163, 7, 85, 0.5);
   transform: translateY(-0.1rem);
   transition: transform 150ms;
+}
+
+.btn[disabled]:hover {
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
 }
 
 /* game */
@@ -147,6 +159,8 @@ h3 {
 .info-title {
   text-align: center;
   font-size: 2rem;
+  color: var(--color-secondary);
+  font-weight: 700;
 }
 
 .info-text {
@@ -175,7 +189,7 @@ h3 {
   align-items: center;
   width: 80%;
   border-radius: 1rem;
-  border: 0.1rem solid var(--color-secondary);
+  border: 0.1rem solid var(--background-color-secondary);
 }
 
 .answer-container:hover {
@@ -186,9 +200,9 @@ h3 {
 }
 
 .answer-prefix {
-  padding: 1rem 1.6rem;
+  padding: 1rem 2rem;
   margin-right: 1.4rem;
-  background-color: var(--color-secondary);
+  background-color: var(--background-color-secondary);
   color: var(--background-color-primary);
   border-radius: 0.9rem 0 0 0.9rem;
 }
@@ -201,6 +215,30 @@ h3 {
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
+}
+
+/* result */
+.final-score {
+  margin-bottom: 3rem;
+  font-size: 3rem;
+}
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  width: 20rem;
+  font-size: 1.8rem;
+  border: 0.2rem solid var(--color-secondary);
+}
+
+input::placeholder {
+  color: var(--color-shadow);
 }
 
 /* utilities */

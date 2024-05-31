@@ -11,7 +11,7 @@
       <section id="home" class="home">
         <h1>Quiz Game</h1>
         <a id="play-btn" class="btn" href="#game">Play</a>
-        <a class="btn" href="/highscores.html">High Scores</a>
+        <a class="btn" href="#result">High Scores</a>
       </section>
 
       <section id="game" class="game hidden">
@@ -48,6 +48,24 @@
             <p class="answer-text" data-number="3">Choice 4</p>
           </div>
         </div>
+      </section>
+      <!-- hidden -->
+      <section id="result" class="result hidden">
+        <h2>Score</h2>
+        <p class="final-score">0</p>
+        <form>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Enter your name"
+          />
+          <button type="submit" class="btn" id="save-score" disabled>
+            Save
+          </button>
+        </form>
+        <a class="btn" href="#game">Play Again</a>
+        <a class="btn" href="/">Go Home</a>
       </section>
     </div>
     <script src="script.js"></script>
