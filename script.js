@@ -2,6 +2,7 @@ let currentQuestion = {};
 let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
+const maxQuestions = 3;
 
 const questions = [
   {
@@ -35,109 +36,27 @@ const questions = [
 
 const playBtn = document.getElementById('play-btn');
 const question = document.getElementById('question');
-const answers = Array.from(document.getElementsByClassName('answer-text'));
+const answers = Array.from(document.querySelectorAll('.answer-text'));
 
 playBtn.addEventListener('click', startGame);
-nextBtn.addEventListener('click', handleNextButtonClick);
 
 function startGame() {
   questionCounter = 0;
   score = 0;
   availableQuestions = [...questions]; //copy questions
   document.getElementById('game').classList.remove('hidden');
-
-  renderNewQuestion();
+  displayNewQuestion();
 }
 
-function renderNewQuestion() {
+function displayNewQuestion() {
   questionCounter++;
-  const questionIndex = Math.floor(Math.random() * availableQuestions.length);
-  currentQuestion = availableQuestions[questionIndex];
+  const randomQuestionIndex = Math.floor(
+    Math.random() * availableQuestions.length
+  );
+  currentQuestion = availableQuestions[randomQuestionIndex];
   question.innerText = currentQuestion.question;
-  currentQuestion.answers.forEach((answer, index) => {
-    const labelElement = document.getElementById(`label${index}`);
-    //to save span inside label
-    // while (
-    //   labelElement.lastChild &&
-    //   labelElement.lastChild.nodeType === Node.TEXT_NODE
-    // ) {
-    //   labelElement.removeChild(labelElement.lastChild);
-    // }
-    const newAnswer = document.createTextNode(answer.text);
-    labelElement.appendChild(newAnswer);
-    document.getElementById(`answer${index}`).checked = false;
-  });
-  availableQuestions.splice(questionIndex, 1);
-}
-
-function getSelectedOption() {
-  for (const answer of answers) {
-    if (answer.checked) {
-      return parseInt(answer.value);
-    }
-  }
-  return -1; // No option selected
-}
-
-function handleNextButtonClick() {
-  const selectedOption = getSelectedOption();
-  if (selectedOption !== -1) {
-    if (currentQuestion.answers[selectedOption].isCorrect) {
-      score++;
-    }
-    questionCounter++;
-    if (availableQuestions.length > 0) {
-      renderNewQuestion();
-      resetAnswers();
-    } else {
-      document.getElementById(
-        'quiz-container'
-      ).innerHTML = `<h3>You scored ${score} out of ${questions.length}!</h3>`;
-    }
-  } else {
-    const messageSelectOption = document.createElement('p');
-    messageSelectOption.innerHTML = 'Please select an option!';
-    messageSelectOption.classList.add('message');
-    document.getElementById('quiz-container').appendChild(messageSelectOption);
-    setTimeout(() => {
-      messageSelectOption.remove();
-    }, 2000);
-  }
-}
-
-answers.forEach((answer) => {
-  answer.addEventListener('click', handleRadioButtonClick);
-});
-
-function handleRadioButtonClick(event) {
-  resetAnswers();
-  const selectedChoice = event.target.value;
-  //making all radio buttons disabled
-  answers.forEach((answer) => {
-    answer.disabled = true;
-  });
-  //changing color of label according to correctness
-  if (currentQuestion.answers[selectedChoice].isCorrect) {
-    document.getElementById(`label${selectedChoice}`).classList.add('correct');
-  } else {
-    document.getElementById(`label${selectedChoice}`).classList.add('wrong');
-  }
-  //making rest of labels disabled
-  Array.from(document.getElementsByTagName('label'))
-    .filter((_, index) => {
-      return index !== parseInt(selectedChoice);
-    })
-    .forEach((label) => {
-      label.classList.add('disabled');
-    });
-}
-
-function resetAnswers() {
-  Array.from(document.getElementsByTagName('label')).forEach((label) => {
-    label.classList.remove('wrong', 'correct');
-  });
   answers.forEach((answer, index) => {
-    answer.disabled = false;
-    document.getElementById(`label${index}`).classList.remove('disabled');
+    answer.innerText = currentQuestion.answers[index].text;
   });
+  availableQuestions.splice(randomQuestionIndex, 1); //remove taken question from array
 }

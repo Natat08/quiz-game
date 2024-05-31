@@ -86,6 +86,7 @@ body {
   max-width: 80%;
   margin: 0 auto;
   overflow: hidden;
+  font-size: 1.5rem;
 }
 
 .home,
@@ -110,11 +111,11 @@ h2 {
 
 h3 {
   font-size: 2.5rem;
+  margin-bottom: 1rem;
 }
 
 .btn {
   display: block;
-  font-size: 1.5rem;
   padding: 1rem 0;
   width: 20rem;
   text-align: center;
@@ -143,7 +144,7 @@ h3 {
   width: 80%;
   height: 40rem;
   background-color: var(--background-color-primary);
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   padding: 1rem 2rem;
 }
 
@@ -151,7 +152,7 @@ h3 {
   display: flex;
   align-items: center;
   width: 80%;
-  font-size: 1.5rem;
+  border-radius: 1rem;
   border: 0.1rem solid var(--color-secondary);
 }
 
@@ -167,6 +168,7 @@ h3 {
   margin-right: 0.8rem;
   background-color: var(--color-secondary);
   color: var(--background-color-primary);
+  border-radius: 0.9rem 0 0 0.9rem;
 }
 
 .disabled {
@@ -182,9 +184,10 @@ input[type='radio'] {
 .hidden {
   display: none;
 }
-.message {
+/* .message {
   font-size: 1.5rem;
-}
+} */
+
 .correct {
   background-color: var(--color-correct);
 }
