@@ -56,6 +56,10 @@ function displayNewQuestion() {
     return;
   }
   questionCounter++;
+  document.getElementById(
+    'questionCounter'
+  ).innerText = `${questionCounter}/${maxQuestions}`;
+
   const randomQuestionIndex = Math.floor(
     Math.random() * availableQuestions.length
   );
@@ -74,12 +78,17 @@ answers.forEach((answer) => {
 const isAnswerCorrect = (number) => currentQuestion.answers[number].isCorrect;
 
 function handleAnswerClick(event) {
+  //finding a selected answer
   const selectedAnswer = event.target;
   const selectedAnswerNumber = Number(selectedAnswer.dataset['number']);
-  //applying classes according to correctness
-  const classForClickedAnswer = isAnswerCorrect(selectedAnswerNumber)
-    ? 'correct'
-    : 'wrong';
+  //applying a class and increasing score according to correctness
+  let classForClickedAnswer = 'wrong';
+  if (isAnswerCorrect(selectedAnswerNumber)) {
+    classForClickedAnswer = 'correct';
+    score++;
+    document.getElementById('score').innerText = score;
+  }
+
   selectedAnswer.parentElement.classList.add(classForClickedAnswer);
   //applying class "disabled" to unselected answer
   answers.forEach((answer, index) => {
@@ -87,7 +96,7 @@ function handleAnswerClick(event) {
       answer.parentElement.classList.add('disabled');
     }
   });
-  //removing all classes and displaying a new question
+  //removing all classes and displaying a new question after 1.5 sec
   setTimeout(() => {
     answers.forEach((answer) => {
       answer.parentElement.classList.remove(classForClickedAnswer, 'disabled');

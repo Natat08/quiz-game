@@ -134,6 +134,28 @@ h3 {
   transition: transform 150ms;
 }
 
+/* game */
+/* information */
+.info-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  max-width: 50rem;
+  width: 50%;
+}
+
+.info-title {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.info-text {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+/* question */
 .question-container {
   display: flex;
   flex-direction: column;
@@ -175,18 +197,16 @@ h3 {
   width: 100%;
 }
 
-.disabled {
+.answer-container.disabled:hover {
   cursor: not-allowed;
-  opacity: 0.5;
+  transform: none;
+  box-shadow: none;
 }
 
 /* utilities */
 .hidden {
   display: none;
 }
-/* .message {
-  font-size: 1.5rem;
-} */
 
 .correct {
   background-color: var(--color-correct);
@@ -194,4 +214,9 @@ h3 {
 
 .wrong {
   background-color: var(--color-wrong);
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
