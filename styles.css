@@ -112,6 +112,7 @@ h2 {
 h3 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .btn {
@@ -138,7 +139,6 @@ h3 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
   gap: 1.5rem;
   max-width: 60rem;
   width: 80%;
@@ -165,19 +165,19 @@ h3 {
 
 .answer-prefix {
   padding: 1rem 1.6rem;
-  margin-right: 0.8rem;
+  margin-right: 1.4rem;
   background-color: var(--color-secondary);
   color: var(--background-color-primary);
   border-radius: 0.9rem 0 0 0.9rem;
 }
 
+.answer-text {
+  width: 100%;
+}
+
 .disabled {
   cursor: not-allowed;
   opacity: 0.5;
-}
-
-input[type='radio'] {
-  display: none;
 }
 
 /* utilities */

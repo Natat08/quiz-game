@@ -49,6 +49,12 @@ function startGame() {
 }
 
 function displayNewQuestion() {
+  if (availableQuestions.length === 0 || questionCounter >= maxQuestions) {
+    document.getElementById(
+      'game'
+    ).innerHTML = `<h3>You scored ${score} out of ${questions.length}!</h3>`;
+    return;
+  }
   questionCounter++;
   const randomQuestionIndex = Math.floor(
     Math.random() * availableQuestions.length
@@ -59,4 +65,33 @@ function displayNewQuestion() {
     answer.innerText = currentQuestion.answers[index].text;
   });
   availableQuestions.splice(randomQuestionIndex, 1); //remove taken question from array
+}
+
+answers.forEach((answer) => {
+  answer.addEventListener('click', handleAnswerClick);
+});
+
+const isAnswerCorrect = (number) => currentQuestion.answers[number].isCorrect;
+
+function handleAnswerClick(event) {
+  const selectedAnswer = event.target;
+  const selectedAnswerNumber = Number(selectedAnswer.dataset['number']);
+  //applying classes according to correctness
+  const classForClickedAnswer = isAnswerCorrect(selectedAnswerNumber)
+    ? 'correct'
+    : 'wrong';
+  selectedAnswer.parentElement.classList.add(classForClickedAnswer);
+  //applying class "disabled" to unselected answer
+  answers.forEach((answer, index) => {
+    if (index !== selectedAnswerNumber) {
+      answer.parentElement.classList.add('disabled');
+    }
+  });
+  //removing all classes and displaying a new question
+  setTimeout(() => {
+    answers.forEach((answer) => {
+      answer.parentElement.classList.remove(classForClickedAnswer, 'disabled');
+    });
+    displayNewQuestion();
+  }, 1500);
 }
