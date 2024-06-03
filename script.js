@@ -3,6 +3,7 @@ let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
 const maxQuestions = 3;
+const maxHighScores = 5;
 
 const questions = [
   {
@@ -39,6 +40,7 @@ const question = document.getElementById('question');
 const answers = Array.from(document.querySelectorAll('.answer-text'));
 const usernameInput = document.getElementById('username');
 const saveScoreBtn = document.getElementById('save-score');
+const highScoresBtn = document.getElementById('high-scores-btn');
 
 playBtn.addEventListener('click', startGame);
 
@@ -124,7 +126,26 @@ function handleSaveScore(event) {
   };
   highScores.push(score);
   highScores.sort((a, b) => b.score - a.score);
-  highScores.splice(5);
+  highScores.splice(maxHighScores);
   localStorage.setItem('highScores', JSON.stringify(highScores));
   window.location.assign('/');
+}
+
+highScoresBtn.addEventListener('click', handleHighScores);
+
+function handleHighScores() {
+  document.getElementById('highScores').classList.remove('hidden');
+  const highScoresList = document.getElementById('highScoresList');
+  const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
+  console.log(!highScores);
+  if (highScores.length === 0) {
+    highScoresList.innerHTML = '<li><h3>No scores saved</h3></li>';
+  } else {
+    highScoresList.innerHTML = highScores
+      .map(
+        (score, index) =>
+          `<li><h3>${index + 1}. ${score.name}</h3><p>${score.score}</p></li>`
+      )
+      .join('');
+  }
 }

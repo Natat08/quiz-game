@@ -93,7 +93,8 @@ body {
 
 .home,
 .game,
-.result {
+.result,
+.high-scores {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -181,7 +182,7 @@ h3 {
   height: 40rem;
   background-color: var(--background-color-primary);
   border-radius: 1.5rem;
-  padding: 1rem 2rem;
+  padding: 1.5rem 2rem;
 }
 
 .answer-container {
@@ -239,6 +240,47 @@ input {
 
 input::placeholder {
   color: var(--color-shadow);
+}
+
+/* high scores */
+.high-scores-list {
+  margin-bottom: 3rem;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: var(--background-color-primary);
+  border-radius: 1.5rem;
+  padding: 2rem 3rem;
+}
+
+.high-scores-list li {
+  display: flex;
+  font-size: 2.7rem;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4rem;
+  min-width: 25rem;
+}
+
+.high-scores-list h3 {
+  font-size: 3rem;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+.high-scores-list p {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 4rem;
+  min-height: 4rem;
+  font-size: 2rem;
+  border-radius: 50%;
+  background-color: var(--background-color-secondary);
+  color: var(--background-color-primary);
 }
 
 /* utilities */
