@@ -2,40 +2,13 @@ let currentQuestion = {};
 let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
-const maxQuestions = 3;
+const maxQuestions = 10;
 const maxHighScores = 5;
 
-const questions = [
-  {
-    question: 'What is the capital of Denmark?',
-    answers: [
-      { text: 'Berlin', isCorrect: false },
-      { text: 'Copenhagen', isCorrect: true },
-      { text: 'Madrid', isCorrect: false },
-      { text: 'Rome', isCorrect: false },
-    ],
-  },
-  {
-    question: 'Which planet is known as the Red Planet?',
-    answers: [
-      { text: 'Earth', isCorrect: false },
-      { text: 'Mars', isCorrect: true },
-      { text: 'Jupiter', isCorrect: false },
-      { text: 'Venus', isCorrect: false },
-    ],
-  },
-  {
-    question: 'Who wrote "Romeo and Juliet"?',
-    answers: [
-      { text: 'Charles Dickens', isCorrect: false },
-      { text: 'Mark Twain', isCorrect: false },
-      { text: 'William Shakespeare', isCorrect: true },
-      { text: 'F. Scott Fitzgerald', isCorrect: false },
-    ],
-  },
-];
+let questions = [];
 
 const playBtn = document.getElementById('play-btn');
+const playAgainBtn = document.getElementById('play-again');
 const question = document.getElementById('question');
 const answers = Array.from(document.querySelectorAll('.answer-text'));
 const usernameInput = document.getElementById('username');
@@ -43,8 +16,56 @@ const saveScoreBtn = document.getElementById('save-score');
 const highScoresBtn = document.getElementById('high-scores-btn');
 
 playBtn.addEventListener('click', startGame);
+playAgainBtn.addEventListener('click', startGame);
+
+fetch(
+  'https://opentdb.com/api.php?amount=10&category=10&difficulty=easy&type=multiple'
+)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok ' + response.statusText);
+    }
+    return response.json();
+  })
+  .then((loadedQuestions) => {
+    questions = formatLoadedQuestions(loadedQuestions.results);
+  })
+  .catch((error) => {
+    console.error('There has been a problem with your fetch operation:', error);
+
+    alert('Failed to load questions. Please try again later.');
+  });
+
+function formatLoadedQuestions(loadedQuestions) {
+  const formattedQuestions = loadedQuestions.map((loadedQuestion) => {
+    const formattedQuestion = {
+      question: loadedQuestion.question,
+      answers: [],
+    };
+    const loadedAnswers = [
+      ...loadedQuestion.incorrect_answers,
+      loadedQuestion.correct_answer,
+    ].sort(() => Math.random() - 0.5);
+    loadedAnswers.forEach((loadedAnswer) => {
+      const answer = {
+        text: loadedAnswer,
+        isCorrect: loadedAnswer === loadedQuestion.correct_answer,
+      };
+      formattedQuestion.answers.push(answer);
+    });
+    return formattedQuestion;
+  });
+  return formattedQuestions;
+}
+
+function decodeHtml(html) {
+  const txt = document.createElement('textarea');
+  txt.innerHTML = html;
+  return txt.value;
+}
 
 function startGame() {
+  console.log(questions);
   questionCounter = 0;
   score = 0;
   availableQuestions = [...questions]; //copy questions
@@ -67,14 +88,15 @@ function displayNewQuestion() {
   document.getElementById(
     'questionCounter'
   ).innerText = `${questionCounter}/${maxQuestions}`;
+  document.getElementById('score').innerText = score;
 
   const randomQuestionIndex = Math.floor(
     Math.random() * availableQuestions.length
   );
   currentQuestion = availableQuestions[randomQuestionIndex];
-  question.innerText = currentQuestion.question;
+  question.innerHTML = currentQuestion.question;
   answers.forEach((answer, index) => {
-    answer.innerText = currentQuestion.answers[index].text;
+    answer.innerHTML = currentQuestion.answers[index].text;
   });
   availableQuestions.splice(randomQuestionIndex, 1);
 }
