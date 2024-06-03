@@ -193,7 +193,7 @@ function handleSaveScore(event) {
   highScores.sort((a, b) => b.score - a.score);
   highScores.splice(maxHighScores);
   localStorage.setItem('highScores', JSON.stringify(highScores));
-  window.location.assign('/');
+  window.location.assign('#home');
 }
 
 highScoresBtn.addEventListener('click', handleHighScores);
