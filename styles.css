@@ -327,6 +327,10 @@ input::placeholder {
   min-width: 25rem;
 }
 
+.high-scores-list .center {
+  justify-content: center;
+}
+
 .high-scores-list h3 {
   font-size: 2.5rem;
   margin-block-start: 0;

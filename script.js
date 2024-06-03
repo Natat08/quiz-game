@@ -114,15 +114,6 @@ function formatLoadedQuestions(loadedQuestions) {
   return formattedQuestions;
 }
 
-// function startGame() {
-//   questionCounter = 0;
-//   score = 0;
-//   availableQuestions = [...questions];
-//   document.getElementById('game').classList.remove('hidden');
-//   document.getElementById('result').classList.add('hidden');
-//   displayNewQuestion();
-// }
-
 function displayNewQuestion() {
   console.log(availableQuestions.length);
   if (availableQuestions.length === 0 || questionCounter >= maxQuestions) {
@@ -211,9 +202,13 @@ function handleHighScores() {
   document.getElementById('highScores').classList.remove('hidden');
   const highScoresList = document.getElementById('highScoresList');
   const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
-  console.log(!highScores);
   if (highScores.length === 0) {
-    highScoresList.innerHTML = '<li><h3>No scores saved</h3></li>';
+    const listItem = document.createElement('li');
+    listItem.classList.add('center');
+    const heading = document.createElement('h3');
+    heading.textContent = 'No scores saved';
+    listItem.appendChild(heading);
+    highScoresList.appendChild(listItem);
   } else {
     highScoresList.innerHTML = highScores
       .map(
