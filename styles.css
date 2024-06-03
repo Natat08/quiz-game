@@ -136,7 +136,7 @@ h3 {
 
 .btn:hover {
   cursor: pointer;
-  box-shadow: 0 0.4rem 1.4rem 0 rgba(163, 7, 85, 0.5);
+  box-shadow: 0 0.4rem 1.4rem 0 var(--color-shadow);
   transform: translateY(-0.1rem);
   transition: transform 150ms;
 }
@@ -145,6 +145,70 @@ h3 {
   cursor: not-allowed;
   box-shadow: none;
   transform: none;
+}
+
+/* form */
+.settings-form {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.category-container,
+.difficulty-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.settings-form legend {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: var(--color-secondary);
+}
+
+fieldset {
+  border: none;
+  margin-bottom: 2rem;
+}
+
+.settings-form label {
+  background-color: #f0f0f0;
+  border: 0.2rem solid var(--background-color-secondary);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: 12rem;
+  height: 6rem;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.difficulty-container label {
+  width: 8rem;
+  height: 4rem;
+}
+
+.settings-form input[type='radio'] {
+  display: none;
+}
+
+.settings-form label:hover {
+  cursor: pointer;
+  box-shadow: 0 0.4rem 1.4rem 0 var(--color-shadow);
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}
+
+input[type='radio']:checked + label {
+  background-color: var(--background-color-secondary);
+  color: var(--background-color-primary);
+  font-weight: 700;
 }
 
 /* game */
@@ -223,14 +287,14 @@ h3 {
   margin-bottom: 3rem;
   font-size: 3rem;
 }
-form {
+.username-form {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-input {
+.username-form input {
   margin-bottom: 1.5rem;
   padding: 1rem;
   width: 20rem;

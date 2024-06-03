@@ -7,34 +7,90 @@ const maxHighScores = 5;
 
 let questions = [];
 
-const playBtn = document.getElementById('play-btn');
-const playAgainBtn = document.getElementById('play-again');
 const question = document.getElementById('question');
+const playBtn = document.getElementById('play-btn');
 const answers = Array.from(document.querySelectorAll('.answer-text'));
 const usernameInput = document.getElementById('username');
 const saveScoreBtn = document.getElementById('save-score');
 const highScoresBtn = document.getElementById('high-scores-btn');
 
+const form = document.querySelector('.settings-form');
+const fieldsetCategoryRadios = form.elements['category'];
+const fieldsetDifficultyRadios = form.elements['difficulty'];
+
+function checkRadios() {
+  const fieldsetCategorySelected = [...fieldsetCategoryRadios].some(
+    (radio) => radio.checked
+  );
+  const fieldsetDifficultySelected = [...fieldsetDifficultyRadios].some(
+    (radio) => radio.checked
+  );
+
+  playBtn.disabled = !(fieldsetCategorySelected && fieldsetDifficultySelected);
+}
+
+fieldsetCategoryRadios.forEach((radio) => {
+  radio.addEventListener('change', checkRadios);
+});
+
+fieldsetDifficultyRadios.forEach((radio) => {
+  radio.addEventListener('change', checkRadios);
+});
+
 playBtn.addEventListener('click', startGame);
-playAgainBtn.addEventListener('click', startGame);
 
-fetch(
-  'https://opentdb.com/api.php?amount=10&category=10&difficulty=easy&type=multiple'
-)
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok ' + response.statusText);
-    }
-    return response.json();
-  })
-  .then((loadedQuestions) => {
-    questions = formatLoadedQuestions(loadedQuestions.results);
-  })
-  .catch((error) => {
-    console.error('There has been a problem with your fetch operation:', error);
-
-    alert('Failed to load questions. Please try again later.');
+function buildFetchUrl(category, difficulty) {
+  const baseUrl = 'https://opentdb.com/api.php';
+  const params = new URLSearchParams({
+    amount: maxQuestions,
+    category,
+    difficulty,
+    type: 'multiple',
   });
+  return `${baseUrl}?${params.toString()}`;
+}
+
+function fetchQuestions() {
+  const category = document.querySelector(
+    'input[name="category"]:checked'
+  ).value;
+  const difficulty = document.querySelector(
+    'input[name="difficulty"]:checked'
+  ).value;
+
+  const fetchUrl = buildFetchUrl(category, difficulty);
+
+  return fetch(fetchUrl)
+    .then((response) => {
+      console.log(response);
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then((loadedQuestions) => {
+      questions = formatLoadedQuestions(loadedQuestions.results);
+      console.log(questions);
+    });
+}
+
+function startGame(event) {
+  event.preventDefault();
+  fetchQuestions()
+    .then(() => {
+      questionCounter = 0;
+      score = 0;
+      availableQuestions = [...questions];
+      document.getElementById('game').classList.remove('hidden');
+      window.location.assign('#game');
+      document.getElementById('result').classList.add('hidden');
+      displayNewQuestion();
+    })
+    .catch((error) => {
+      console.error(error);
+      alert('Failed to load questions. Please try again later.');
+    });
+}
 
 function formatLoadedQuestions(loadedQuestions) {
   const formattedQuestions = loadedQuestions.map((loadedQuestion) => {
@@ -58,23 +114,19 @@ function formatLoadedQuestions(loadedQuestions) {
   return formattedQuestions;
 }
 
-function decodeHtml(html) {
-  const txt = document.createElement('textarea');
-  txt.innerHTML = html;
-  return txt.value;
-}
-
-function startGame() {
-  console.log(questions);
-  questionCounter = 0;
-  score = 0;
-  availableQuestions = [...questions]; //copy questions
-  document.getElementById('game').classList.remove('hidden');
-  displayNewQuestion();
-}
+// function startGame() {
+//   questionCounter = 0;
+//   score = 0;
+//   availableQuestions = [...questions];
+//   document.getElementById('game').classList.remove('hidden');
+//   document.getElementById('result').classList.add('hidden');
+//   displayNewQuestion();
+// }
 
 function displayNewQuestion() {
+  console.log(availableQuestions.length);
   if (availableQuestions.length === 0 || questionCounter >= maxQuestions) {
+    console.log('dddd');
     localStorage.setItem('latestScore', score);
     //go to the score page
     document.getElementById('result').classList.remove('hidden');

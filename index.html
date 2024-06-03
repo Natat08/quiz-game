@@ -10,7 +10,84 @@
     <div class="container">
       <section id="home" class="home">
         <h1>Quiz Game</h1>
-        <a id="play-btn" class="btn" href="#game">Play</a>
+        <form class="settings-form">
+          <fieldset>
+            <legend>Category:</legend>
+            <div class="category-container">
+              <input
+                id="category9"
+                type="radio"
+                name="category"
+                value="9"
+                required
+              />
+              <label for="category9">General Knowledge</label>
+
+              <input id="category10" type="radio" name="category" value="10" />
+              <label for="category10">Books</label>
+
+              <input id="category11" type="radio" name="category" value="11" />
+              <label for="category11">Films</label>
+
+              <input id="category12" type="radio" name="category" value="12" />
+              <label for="category12">Music</label>
+
+              <input id="category25" type="radio" name="category" value="25" />
+              <label for="category25">Art</label>
+
+              <input id="category21" type="radio" name="category" value="21" />
+              <label for="category21">Sports</label>
+
+              <input id="category27" type="radio" name="category" value="27" />
+              <label for="category27">Animals</label>
+
+              <input id="category18" type="radio" name="category" value="18" />
+              <label for="category18">Computers</label>
+
+              <input id="category26" type="radio" name="category" value="26" />
+              <label for="category26">Celebrities</label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Difficulty:</legend>
+            <div class="difficulty-container">
+              <input
+                id="difficulty-easy"
+                type="radio"
+                name="difficulty"
+                value="easy"
+                required
+              />
+              <label for="difficulty-easy">Easy</label>
+
+              <input
+                id="difficulty-medium"
+                type="radio"
+                name="difficulty"
+                value="medium"
+              />
+              <label for="difficulty-medium">Medium</label>
+
+              <input
+                id="difficulty-hard"
+                type="radio"
+                name="difficulty"
+                value="hard"
+              />
+              <label for="difficulty-hard">Hard</label>
+            </div>
+          </fieldset>
+          <button
+            type="submit"
+            class="btn"
+            id="play-btn"
+            title="Choose a category and difficulty"
+            disabled
+          >
+            Play
+          </button>
+        </form>
         <a id="high-scores-btn" class="btn" href="#highScores">High scores</a>
       </section>
 
@@ -53,18 +130,23 @@
       <section id="result" class="result hidden">
         <h2>Your score</h2>
         <p class="final-score">0</p>
-        <form>
+        <form class="username-form">
           <input
             type="text"
             name="username"
             id="username"
             placeholder="Enter your name"
           />
-          <button type="submit" class="btn" id="save-score" disabled>
+          <button
+            type="submit"
+            class="btn"
+            id="save-score"
+            title="Enter your name"
+            disabled
+          >
             Save
           </button>
         </form>
-        <a class="btn" href="#game" id="play-again">Play Again</a>
         <a class="btn" href="/">Go home</a>
       </section>
       <section id="highScores" class="high-scores hidden">
