@@ -109,7 +109,8 @@ body {
 .home,
 .game,
 .result,
-.high-scores {
+.high-scores,
+.page404 {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -366,6 +367,11 @@ input::placeholder {
   border-radius: 50%;
   background-color: var(--background-color-secondary);
   color: var(--background-color-primary);
+}
+
+/* page404 */
+.page404 {
+  gap: 2rem;
 }
 
 /* utilities */
