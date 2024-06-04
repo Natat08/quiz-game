@@ -1,11 +1,12 @@
 :root {
   --font-primary: Geneva, Verdana, sans-serif;
   --background-color-primary: #fff;
-  --background-color-secondary: rgb(203, 85, 136);
+  --background-color-secondary: #cb5588;
   --background-color-gradient: linear-gradient(to right, #eecda3, #ef629f);
   --color-primary: #444;
   --color-secondary: #a40f4f;
   --color-correct: #a2e8a29d;
+  --color-correct-answer: #1c751c;
   --color-wrong: #f22d2d56;
   --color-shadow: #5e0a2e89;
 }
@@ -74,11 +75,25 @@ html {
   font-size: 62.5%; /* 10px */
 }
 
+@media (max-width: 1000px) {
+  html {
+    font-size: 60%;
+  }
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 55%;
+  }
+}
+
 body {
   font-family: var(--font-primary);
   color: var(--color-primary);
   background-color: var(--background-color-primary);
   background: var(--background-color-gradient);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .container {
@@ -87,7 +102,7 @@ body {
   align-items: center;
   max-width: 80%;
   margin: 0 auto;
-  overflow: hidden;
+
   font-size: 1.5rem;
 }
 
@@ -105,13 +120,13 @@ body {
 
 h1 {
   font-size: 4.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   color: var(--color-secondary);
 }
 
 h2 {
   font-size: 3.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   color: var(--color-secondary);
 }
 
@@ -243,10 +258,10 @@ input[type='radio']:checked + label {
   gap: 1.5rem;
   max-width: 60rem;
   width: 80%;
-  height: 40rem;
+  min-height: 40rem;
   background-color: var(--background-color-primary);
   border-radius: 1.5rem;
-  padding: 1.5rem 2rem;
+  padding: 2rem;
 }
 
 .answer-container {
@@ -267,9 +282,11 @@ input[type='radio']:checked + label {
 .answer-prefix {
   padding: 1rem 2rem;
   margin-right: 1.4rem;
+  max-width: 5rem;
   background-color: var(--background-color-secondary);
   color: var(--background-color-primary);
   border-radius: 0.9rem 0 0 0.9rem;
+  align-self: stretch;
 }
 
 .answer-text {
@@ -366,5 +383,10 @@ input::placeholder {
 
 .disabled {
   cursor: not-allowed;
-  opacity: 0.5;
+  opacity: 0.7;
+}
+
+.correct-answer {
+  color: var(--color-correct-answer);
+  font-weight: bold;
 }

@@ -2,7 +2,7 @@ let currentQuestion = {};
 let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
-const maxQuestions = 10;
+const maxQuestions = 5;
 const maxHighScores = 5;
 
 let questions = [];
@@ -13,33 +13,38 @@ const answers = Array.from(document.querySelectorAll('.answer-text'));
 const usernameInput = document.getElementById('username');
 const saveScoreBtn = document.getElementById('save-score');
 const highScoresBtn = document.getElementById('high-scores-btn');
+const settingForm = document.querySelector('.settings-form');
+const categoryRadios = settingForm.elements['category'];
+const difficultyRadios = settingForm.elements['difficulty'];
 
-const form = document.querySelector('.settings-form');
-const fieldsetCategoryRadios = form.elements['category'];
-const fieldsetDifficultyRadios = form.elements['difficulty'];
-
-function checkRadios() {
-  const fieldsetCategorySelected = [...fieldsetCategoryRadios].some(
-    (radio) => radio.checked
-  );
-  const fieldsetDifficultySelected = [...fieldsetDifficultyRadios].some(
-    (radio) => radio.checked
-  );
-
-  playBtn.disabled = !(fieldsetCategorySelected && fieldsetDifficultySelected);
-}
-
-fieldsetCategoryRadios.forEach((radio) => {
+categoryRadios.forEach((radio) => {
   radio.addEventListener('change', checkRadios);
 });
-
-fieldsetDifficultyRadios.forEach((radio) => {
+difficultyRadios.forEach((radio) => {
   radio.addEventListener('change', checkRadios);
 });
 
 playBtn.addEventListener('click', startGame);
 
-function buildFetchUrl(category, difficulty) {
+function checkRadios() {
+  const isCategorySelected = [...categoryRadios].some((radio) => radio.checked);
+  const isDifficultySelected = [...difficultyRadios].some(
+    (radio) => radio.checked
+  );
+  playBtn.disabled = !(isCategorySelected && isDifficultySelected);
+}
+
+function getSettings() {
+  const selectedCategory = document.querySelector(
+    'input[name="category"]:checked'
+  ).value;
+  const selectedDifficulty = document.querySelector(
+    'input[name="difficulty"]:checked'
+  ).value;
+  return { selectedCategory, selectedDifficulty };
+}
+
+function createTriviaAPIUrl(category, difficulty) {
   const baseUrl = 'https://opentdb.com/api.php';
   const params = new URLSearchParams({
     amount: maxQuestions,
@@ -51,18 +56,11 @@ function buildFetchUrl(category, difficulty) {
 }
 
 function fetchQuestions() {
-  const category = document.querySelector(
-    'input[name="category"]:checked'
-  ).value;
-  const difficulty = document.querySelector(
-    'input[name="difficulty"]:checked'
-  ).value;
-
-  const fetchUrl = buildFetchUrl(category, difficulty);
+  const { selectedCategory, selectedDifficulty } = getSettings();
+  const fetchUrl = createTriviaAPIUrl(selectedCategory, selectedDifficulty);
 
   return fetch(fetchUrl)
     .then((response) => {
-      console.log(response);
       if (!response.ok) {
         throw new Error('Network response was not ok ' + response.statusText);
       }
@@ -70,7 +68,6 @@ function fetchQuestions() {
     })
     .then((loadedQuestions) => {
       questions = formatLoadedQuestions(loadedQuestions.results);
-      console.log(questions);
     });
 }
 
@@ -115,11 +112,9 @@ function formatLoadedQuestions(loadedQuestions) {
 }
 
 function displayNewQuestion() {
-  console.log(availableQuestions.length);
   if (availableQuestions.length === 0 || questionCounter >= maxQuestions) {
-    console.log('dddd');
     localStorage.setItem('latestScore', score);
-    //go to the score page
+
     document.getElementById('result').classList.remove('hidden');
     document.querySelector('.final-score').innerText =
       localStorage.getItem('latestScore');
@@ -128,8 +123,9 @@ function displayNewQuestion() {
   }
 
   questionCounter++;
+
   document.getElementById(
-    'questionCounter'
+    'question-counter'
   ).innerText = `${questionCounter}/${maxQuestions}`;
   document.getElementById('score').innerText = score;
 
@@ -165,15 +161,22 @@ function handleAnswerClick(event) {
   answers.forEach((answer, index) => {
     if (index !== selectedAnswerNumber) {
       answer.parentElement.classList.add('disabled');
+      if (isAnswerCorrect(index)) {
+        answer.parentElement.classList.add('correct-answer');
+      }
     }
   });
 
   setTimeout(() => {
     answers.forEach((answer) => {
-      answer.parentElement.classList.remove(classForClickedAnswer, 'disabled');
+      answer.parentElement.classList.remove(
+        classForClickedAnswer,
+        'disabled',
+        'correct-answer'
+      );
     });
     displayNewQuestion();
-  }, 1000);
+  }, 1500);
 }
 
 usernameInput.addEventListener('keyup', () => {
@@ -200,7 +203,7 @@ highScoresBtn.addEventListener('click', handleHighScores);
 
 function handleHighScores() {
   document.getElementById('highScores').classList.remove('hidden');
-  const highScoresList = document.getElementById('highScoresList');
+  const highScoresList = document.getElementById('high-scores-list');
   const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
   if (highScores.length === 0) {
     const listItem = document.createElement('li');
