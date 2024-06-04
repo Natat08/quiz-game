@@ -2,7 +2,7 @@ let currentQuestion = {};
 let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
-const maxQuestions = 5;
+const maxQuestions = 10;
 const maxHighScores = 5;
 
 let questions = [];
